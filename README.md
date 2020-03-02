@@ -1,2 +1,7 @@
-# zhihu_users_scrapy
-# scrapy_zhihu_users 以个人的账户为起始用户，爬取个人账户的关注者，再爬取关注者的关注者，循环下去，这样就可以尽可能多的爬取知乎用户
+知乎用户信息爬取（scrapy,mongodb）
+一、项目描述
+用scrapy框架爬取知乎用户信息，并保存在mongodb中
+二、技术难点
+scrapy内置twisted异步io框架，默认16个线程数。downloader多线程下载器往往需要队列入栈出栈操作，因此spider在Request时需要传入可迭代对象，所以在函数satrt_requests和parse中应该使用yeild关键字返回生成器。
+三、技术方案
+请求初始用户的关注者urls并解析urls中的用户信息，同时得到关注者的关注者的urls，解析关注者的关注者信息，一直请求下去，直到无用户。注意相同用户信息去重update。
